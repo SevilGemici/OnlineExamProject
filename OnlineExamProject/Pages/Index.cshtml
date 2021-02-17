@@ -1,0 +1,52 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Exam</h1>    
+</div>
+
+@foreach(var item in Model.result)
+{
+    <table class="table">
+        <tr>
+            <td>
+                @item.QId)@item.Question
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input id="Option1" type="radio" name="@item.QId" class="rb" value="@item.Option1" />@item.Option1
+                <input id="Option2" type="radio" name="@item.QId" class="rb" value="@item.Option2" />@item.Option2
+                <input id="Option3" type="radio" name="@item.QId" class="rb" value="@item.Option3" />@item.Option3
+                <input id="Option4" type="radio" name="@item.QId" class="rb" value="@item.Option4" />@item.Option4
+                <label name="@item.QId" class="rb" style="display:none;color:forestgreen;font:bold;">@item.Correct</label>
+            </td>
+        </tr>
+    </table>
+}
+
+<button id="button1" type="button" value="Submit" class="btn-success" onclick="result();">Submit</button>
+<label id="lbluseranswer"></label>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#button1").click(function () {
+            $(".rb").show();
+            $(".rb").attr("disabled", true);
+        });
+    });
+    function result() {
+        document.getElementById("lbluseranswer").innerHTML = "";
+        var res = document.getElementsByTagName('input');
+        for (i = 0; i < res.length; i++) {
+            if (res[i].type == "radio") {
+                if (res[i].checked) {
+                    document.getElementById("lbluseranswer").innerHTML += "Q" + res[i].name + ")" + "Your Selected Answer Is: " + res[i].value + "<br/";
+                }
+            }
+        }
+    }
+</script>
